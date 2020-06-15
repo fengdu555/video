@@ -1,8 +1,181 @@
 <!--
  * @Author: your name
  * @Date: 2020-06-15 15:40:40
- * @LastEditTime: 2020-06-15 15:40:40
+ * @LastEditTime: 2020-06-15 17:23:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: /github/video/assets/video/index.html
+ * @FilePath: /github/video/index.html
 --> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>video学习</title>
+</head>
+<body>
+  <!-- 这个时候无法播放 -->
+  <!-- <video src="./assets//video/test.mp4" width="400" height="225"></video> -->
+
+  <!-- 加controls属性，出现操控控件 -->
+  <!-- <video src="./assets//video/test.mp4" width="400" height="225" controls></video> -->
+
+  <!-- 不提供下载  加controlslist="nodownload属性"-->
+  <!-- <video src="./assets//video/test.mp4" width="400" height="225" controls controlslist="nodownload"></video> -->
+
+  <!-- 不提供全屏 在加controlslist加 nofullscreen属性 -->
+  <!-- <video src="./assets//video/test.mp4" width="400" height="225" controls controlslist="nodownload nofullscreen"></video> -->
+  
+  <!-- 加封面 -->
+  <!-- <video src="./assets//video/test.mp4" width="400" height="225" controls poster="./assets/images/test.jpeg"></video> -->
+
+  <!-- 自动播放 加autoplay属性 -->
+  <!-- <video src="./assets//video/test.mp4" width="400" height="225" autoplay controls poster="./assets/images/test.jpeg"></video> -->
+
+  <!-- 静音 加muted属性 （移动端要自动放，加muted静音状态下）-->
+  <!-- <video src="./assets//video/test.mp4" width="400" height="225" muted controls poster="./assets/images/test.jpeg"></video> -->
+
+  <!-- 循环播放 加loop属性 -->
+  <!-- <video src="./assets//video/test.mp4" width="400" height="225" loop controls poster="./assets/images/test.jpeg"></video> -->
+
+  <!-- 预加载 加属性preload -->
+  <!-- <video src="./assets//video/test.mp4" width="400" height="225" preload controls poster="./assets/images/test.jpeg"></video> -->
+
+  <!-- 音量控制 需要js来控制 -->
+  <!-- <video src="./assets//video/test.mp4" id="video" width="400" height="225" preload controls poster="./assets/images/test.jpeg"></video> -->
+
+  <!-- 播放控制，直接播放60s的时候 需要js来控制 -->
+  <!-- <video src="./assets//video/test.mp4" id="video" width="400" height="225" preload controls poster="./assets/images/test.jpeg"></video> -->
+  
+  <!-- 视频地址切换 需要js来控制-->
+  <!-- <video src="./assets//video/test.mp4" id="video" width="400" height="225" controls poster="./assets/images/test.jpeg"></video> -->
+  
+  <!-- 备用地址，video另外一个加载地址方法 当第一个source地址播放不出来的时候，会播放第二个source-->
+  <video id="video" width="400" height="225" controls poster="./assets/images/test.jpeg">
+    <source src="./assets/video/test1.mp4" type="video/mp4">
+    <source src="./assets/video/test.mp4" type="video/mp4">
+  </video>
+
+
+  <script>
+    let el = document.getElementById("video")
+
+    // 音量控制 需要js来控制
+    el.volume = 0.5
+
+    //播放60s,需要js来控制 
+    el.currentTime = 60
+
+    //视频地址切换,加个延迟
+    // setTimeout(() => {
+    //   el.src='./assets/video/test01.mp4'
+    // },1000)
+
+    //当播放属性是source时，获取当前播放的地址方法,可以检查出错误的地址，没播放的，从上往下播放
+    console.log(el.currentSrc)
+
+    /**
+     * 视频事件
+     * 1、loadstart 视频查找,视频开始加载
+     * 2、durationchange 视频时长变化是获取时长，这个是变化的，有时候一次性获取全部时长，有时候两次才获取全部时长，跟视频格式有关，看视频源数据下载完多少
+     * 3、loadedmetadata 表示源数据下载完成
+     * 4、loadeddata 当前的帧数据已经加载，但是没有数据去播放音频和视频的下一帧
+     * 5、progress 当前视频音频正在下载数据
+     * 6、canplay 有帧可以播放来 通常需要js程序去控制视频的播放和暂停，在监听canplay或canplaythrough下进行
+     * 7、canplaythrough 可以流畅的播放视频了
+     * 8、play 监听视频点击了播放,从暂停到播放的一个状态就会触发
+     * 9、pause 从播放到的暂停一个状态就会触发
+     * 10、seeking 监听直接点击视频某个时间去播放
+     * 11、seeded seeking结束，查找数据结束
+     * 12、waiting 等待
+     * 13、playing
+     * 14、timeupdate 播放时间更新
+     * 15、ended 播放结束
+     * 16、error 监听播放出错
+     **/
+
+     // loadstart
+     el.addEventListener('loadstart' ,(e) => {
+       console.log('loadstart')
+     })
+
+     //2、durationchange
+     el.addEventListener('durationchange' ,(e) => {
+       console.log('durationchange',el.duration)
+     })
+
+     //3、loadedmetadata
+     el.addEventListener('loadedmetadata' ,(e) => {
+       console.log('loadedmetadata',el.duration)
+     })
+
+     //4、loadeddata
+     el.addEventListener('loadeddata' ,(e) => {
+       console.log('loadeddata',el.duration)
+     })
+
+      //5、progress
+      el.addEventListener('progress' ,(e) => {
+       console.log('progress')
+     })
+
+      //通常需要js程序去控制视频的播放和暂停，在监听canplay或canplaythrough下进行
+     //6、canplay
+     el.addEventListener('canplay' ,(e) => {
+       console.log('canplay')
+     })
+
+      //7、canplaythrough
+      el.addEventListener('canplaythrough' ,(e) => {
+       console.log('canplaythrough')
+     })
+
+      //8、play
+      el.addEventListener('play' ,(e) => {
+       console.log('play')
+     })
+
+      //9、pause
+      el.addEventListener('pause' ,(e) => {
+       console.log('pause')
+     })
+
+      //10、seeking
+      el.addEventListener('seeking' ,(e) => {
+       console.log('seeking')
+     })
+
+      //11、seeded
+      el.addEventListener('seeded' ,(e) => {
+       console.log('seeded')
+     })
+
+      //12、waiting
+      el.addEventListener('waiting' ,(e) => {
+       console.log('waiting')
+     })
+
+      //13、playing
+      el.addEventListener('playing' ,(e) => {
+       console.log('playing')
+     })
+
+     //14、timeupdate
+     el.addEventListener('timeupdate' ,(e) => {
+       console.log('timeupdate')
+     })
+
+     //15、ended
+     el.addEventListener('ended' ,(e) => {
+       console.log('ended')
+     })
+
+     //16、error
+     el.addEventListener('error' ,(e) => {
+       console.log('error',e)
+     })
+
+    
+  </script>
+</body>
+</html>
